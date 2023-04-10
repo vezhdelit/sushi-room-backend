@@ -10,11 +10,19 @@ const UserSchema = new mongoose.Schema({
         required: true,
         unique: true,
     },
+    phoneNumber: {
+        type: String,
+        required: true,
+        unique: true,
+    },
     passwordHash: {
         type: String,
         required: true,
     },
-    avatarUrl: String,
+    favourites: {
+        type: Array,
+        default: [],
+    }
 },
     {
         timestamps: true,
