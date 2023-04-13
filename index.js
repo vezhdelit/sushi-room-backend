@@ -5,9 +5,12 @@ import { registerValidation, loginValidation } from './validations/auth.js';
 import { register, login, profile, addFavourite, removeFavourite, update } from './controllers/UserController.js';
 import checkAuth from './middleware/checkAuth.js';
 
-
 import { itemCreateValidation } from './validations/item.js';
 import { createItem, getAllItems, getOneItem } from './controllers/ItemController.js';
+
+import { adCreateValidation } from './validations/ad.js';
+import { createAd, getAllAds } from './controllers/AdController.js';
+
 
 mongoose
     .connect('mongodb+srv://admin:prototype28@sushi-room.io6uttd.mongodb.net/sushi-room?retryWrites=true&w=majority')
@@ -38,6 +41,11 @@ app.patch('/auth/removeFavourite', checkAuth, removeFavourite);
 app.post('/items', itemCreateValidation, createItem);
 app.get('/items', getAllItems);
 app.get('/items/:id', getOneItem);
+
+////
+
+app.post('/ads', adCreateValidation, createAd);
+app.get('/ads', getAllAds);
 
 //////////////////////////////////////////////
 
