@@ -1,9 +1,16 @@
 import express from 'express'
+import mongoose from 'mongoose';
+
+mongoose
+    .connect('mongodb+srv://admin:prototype28@sushi-room.io6uttd.mongodb.net/sushi-room?retryWrites=true&w=majority')
+    .then(() => console.log('Database reached successfuly'))
+    .catch((err) => console.log("Error. Can't reach database", err))
 
 const app = express();
+app.use(express.json());
 
 app.get('/', (req, res) => {
-    res.send('Hello world!');
+    res.send('Server is up.');
 });
 
 app.listen(process.env.PORT || 5000, (err) => {
