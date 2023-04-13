@@ -165,7 +165,7 @@ export const addFavourite = async (req, res) => {
                 _id: req.userId,
             },
             {
-                $addToSet: { favourites: req.body.id },
+                $addToSet: { favourites: req.body._id },
             },
             {
                 returnDocument: 'after',
@@ -199,7 +199,7 @@ export const removeFavourite = async (req, res) => {
                 _id: req.userId,
             },
             {
-                $pull: { favourites: req.body.id },
+                $pull: { favourites: req.body._id },
             },
             {
                 returnDocument: 'after',

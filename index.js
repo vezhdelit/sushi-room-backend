@@ -2,11 +2,13 @@ import express from 'express';
 import mongoose from 'mongoose';
 import { registerValidation, loginValidation } from './validations/auth.js';
 import { itemCreateValidation } from './validations/item.js';
+import { adCreateValidation } from './validations/ad.js';
 import cors from 'cors';
 
 import checkAuth from './utils/checkAuth.js';
 import { register, login, profile, addFavourite, removeFavourite, update } from './controllers/UserController.js';
-import { create, getAll } from './controllers/ItemController.js';
+import { createItem, getAllItems, getOneItem } from './controllers/ItemController.js';
+import { createAd, getAllAds } from './controllers/AdController.js';
 
 mongoose
     .connect('mongodb+srv://admin:prototype28@sushi-room.io6uttd.mongodb.net/sushi-room?retryWrites=true&w=majority')
@@ -29,12 +31,16 @@ app.patch('/auth/removeFavourite', checkAuth, removeFavourite);
 
 /////////////////////////////
 
-app.post('/items', itemCreateValidation, create);
-app.get('/items', getAll);
-// app.get('/items/:id', getOne);
-// app.delete('/items', remove);
-// app.patch('/items/:id', update);
+app.post('/items', itemCreateValidation, createItem);
+app.get('/items', getAllItems);
+app.get('/items/:id', getOneItem);
+// app.delete('/items', removeItem);
+// app.patch('/items/:id', updateItem);
 
+//////////////////////////////
+
+app.post('/ads', adCreateValidation, createAd);
+app.get('/ads', getAllAds);
 
 app.listen(4444, (err) => {
     if (err) {

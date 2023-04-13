@@ -17,7 +17,7 @@ const ItemSchema = new mongoose.Schema({
         type: Number,
         required: true,
     },
-    quantity: {
+    weight: {
         type: Number,
         required: true,
     },
