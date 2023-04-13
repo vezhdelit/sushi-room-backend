@@ -1,5 +1,6 @@
 import express from 'express'
 import mongoose from 'mongoose';
+import cors from 'cors';
 
 import { registerValidation, loginValidation } from './validations/auth.js';
 import { register, login, profile, addFavourite, removeFavourite, update } from './controllers/UserController.js';
@@ -19,6 +20,7 @@ mongoose
 
 const app = express();
 app.use(express.json());
+app.use(cors());
 
 ///////////////////////////////////////////////
 
