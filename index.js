@@ -1,6 +1,11 @@
 import express from 'express'
 import mongoose from 'mongoose';
 
+import { registerValidation, loginValidation } from './validations/auth.js';
+import { register, login, profile, addFavourite, removeFavourite, update } from './controllers/UserController.js';
+import checkAuth from './middleware/checkAuth.js';
+
+
 import { itemCreateValidation } from './validations/item.js';
 import { createItem, getAllItems, getOneItem } from './controllers/ItemController.js';
 
@@ -17,6 +22,18 @@ app.use(express.json());
 app.get('/', (req, res) => {
     res.send('Server is up.');
 });
+
+////
+
+app.post('/auth/login', loginValidation, login);
+app.post('/auth/register', registerValidation, register);
+app.get('/auth/profile', checkAuth, profile);
+
+app.patch('/auth', registerValidation, checkAuth, update);
+app.patch('/auth/addFavourite', checkAuth, addFavourite);
+app.patch('/auth/removeFavourite', checkAuth, removeFavourite);
+
+////
 
 app.post('/items', itemCreateValidation, createItem);
 app.get('/items', getAllItems);
