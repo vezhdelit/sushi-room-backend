@@ -13,7 +13,7 @@ import { createAd, getAllAds } from './controllers/AdController.js';
 
 
 mongoose
-    .connect('mongodb+srv://admin:prototype28@sushi-room.io6uttd.mongodb.net/sushi-room?retryWrites=true&w=majority')
+    .connect(process.env.MONGODB_URI)
     .then(() => console.log('Database reached successfuly'))
     .catch((err) => console.log("Error. Can't reach database", err))
 
