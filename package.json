@@ -1,7 +1,6 @@
 {
   "name": "sushi-room-backend",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "type": "module",
   "scripts": {
@@ -17,5 +16,7 @@
     "express-validator": "^6.15.0",
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^7.0.3"
-  }
+  },
+  "devDependencies": {},
+  "description": ""
 }

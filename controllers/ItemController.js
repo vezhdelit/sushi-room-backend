@@ -6,6 +6,9 @@ export const getAllItems = async (req, res) => {
         const sortBy = req.query.sortBy || 'rating';
         const sortOrder = req.query.order;
         const search = req.query.search || '';
+        const limit = req.query.limit || 0;
+        const page = req.query.page || 1;
+
 
         const filter = {
             $or: [
@@ -18,7 +21,7 @@ export const getAllItems = async (req, res) => {
         if (category) {
             filter.category = category;
         }
-        const items = await ItemModel.find(filter).sort([[sortBy, sortOrder]]);
+        const items = await ItemModel.find(filter).sort([[sortBy, sortOrder]]).skip((page - 1) * limit).limit(limit);
         res.json(items);
     } catch (err) {
         console.log(err);
