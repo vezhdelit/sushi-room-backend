@@ -1,9 +1,17 @@
-import express from 'express'
+import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
+import dotenv from 'dotenv';
 
 import { registerValidation, loginValidation } from './validations/auth.js';
-import { register, login, profile, addFavourite, removeFavourite, update } from './controllers/UserController.js';
+import {
+  register,
+  login,
+  profile,
+  addFavourite,
+  removeFavourite,
+  update,
+} from './controllers/UserController.js';
 import checkAuth from './middleware/checkAuth.js';
 
 import { itemCreateValidation } from './validations/item.js';
@@ -12,20 +20,20 @@ import { createItem, getAllItems, getOneItem } from './controllers/ItemControlle
 import { adCreateValidation } from './validations/ad.js';
 import { createAd, getAllAds } from './controllers/AdController.js';
 
-
-mongoose
-    .connect(process.env.MONGODB_URI)
-    .then(() => console.log('Database reached successfuly'))
-    .catch((err) => console.log("Error. Can't reach database", err))
-
 const app = express();
 app.use(express.json());
 app.use(cors());
+dotenv.config();
+
+mongoose
+  .connect(process.env.MONGODB_URI)
+  .then(() => console.log('Database reached successfuly'))
+  .catch((err) => console.log("Error. Can't reach database", err));
 
 ///////////////////////////////////////////////
 
 app.get('/', (req, res) => {
-    res.send('Server is up.');
+  res.send('Server is up.');
 });
 
 ////
@@ -52,8 +60,8 @@ app.get('/ads', getAllAds);
 //////////////////////////////////////////////
 
 app.listen(process.env.PORT || 5000, (err) => {
-    if (err) {
-        return console.log("Error. Can't start server", err);
-    }
-    console.log('Server started successfuly');
+  if (err) {
+    return console.log("Error. Can't start server", err);
+  }
+  console.log('Server started successfuly');
 });
