@@ -35,9 +35,6 @@ mongoose
 app.get('/', (req, res) => {
   res.send('Server is up.');
 });
-app.get('/items', (req, res) => {
-  res.send('DB reached.');
-});
 ////
 
 app.post('/auth/login', loginValidation, login);
