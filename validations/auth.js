@@ -4,7 +4,7 @@ export const loginValidation = [body('email').isEmail(), body('password').isLeng
 
 export const registerValidation = [
   body('email').isEmail(),
-  body('password').isLength({ min: 8 }),
+  body('password').isLength({ min: 5 }),
   body('fullName').isLength({ min: 2 }),
   body('phoneNumber').isMobilePhone(),
   body('favourites').optional(),
