@@ -13,10 +13,17 @@ import {
   addFavourite,
   removeFavourite,
 } from './controllers/UserController.js';
+
 import checkAuth from './middleware/checkAuth.js';
 
 import { itemCreateValidation } from './validations/item.js';
-import { createItem, getAllItems, getOneItem } from './controllers/ItemController.js';
+import { 
+  createItem, 
+  getAllItems, 
+  getOneItem,
+  deleteItem,
+  updateItem
+} from './controllers/ItemController.js';
 
 import { adCreateValidation } from './validations/ad.js';
 import { createAd, getAllAds } from './controllers/AdController.js';
@@ -42,7 +49,6 @@ app.get('/', (req, res) => {
 app.post('/auth/login', loginValidation, login);
 app.post('/auth/register', registerValidation, register);
 app.get('/auth/profile', checkAuth, profile);
-
 app.delete('/auth', checkAuth, remove);
 app.patch('/auth', registerValidation, checkAuth, update);
 
@@ -54,6 +60,8 @@ app.patch('/auth/removeFavourite', checkAuth, removeFavourite);
 app.post('/items', itemCreateValidation, createItem);
 app.get('/items', getAllItems);
 app.get('/items/:id', getOneItem);
+app.delete('/items/:id', deleteItem); //TODO: make checkAdmin
+app.patch('/items/:id', itemCreateValidation, updateItem);
 
 ////
 

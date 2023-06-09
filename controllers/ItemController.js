@@ -88,3 +88,69 @@ export const createItem = async (req, res) => {
     });
   }
 };
+
+export const deleteItem = async (req, res) => {
+  try {
+    const itemId = req.params.id;
+
+    const item = await ItemModel.findById(itemId);
+
+    if (!item) {
+      return res.status(404).json({
+        message: 'Item is not found.',
+      });
+    }
+
+    await ItemModel.findByIdAndRemove(itemId);
+
+    res.json({
+      success: "true"
+    });
+    
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      message: 'Failed deleting item.',
+    });
+  }
+};
+
+export const updateItem = async (req, res) => {
+  try {
+    const itemId = req.params.id;
+
+    const item = await ItemModel.findById(itemId);
+
+    if (!item) {
+      return res.status(404).json({
+        message: 'Item is not found.',
+      });
+    }
+    await ItemModel.findOneAndUpdate(
+      {
+        _id: itemId
+      },
+      {
+        imageUrl: req.body.imageUrl,
+        title: req.body.title,
+        price: req.body.price,
+        quantity: req.body.quantity,
+        weight: req.body.weight,
+  
+        description: req.body.description,
+        compounds: req.body.compounds,
+        category: req.body.category,
+      },
+      {
+        returnDocument: 'after',
+      },
+    ).then((item) => {
+      res.json(item._doc);
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      message: 'Failed update item.',
+    });
+  }
+};
