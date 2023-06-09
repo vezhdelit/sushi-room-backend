@@ -109,6 +109,7 @@ export const profile = async (req, res) => {
     });
   }
 };
+
 export const update = async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -146,6 +147,29 @@ export const update = async (req, res) => {
     console.log(err);
     res.status(500).json({
       message: 'Failed update info.',
+    });
+  }
+};
+
+export const remove = async (req, res) => {
+  try {
+    const user = await UserModel.findById(req.userId);
+
+    if (!user) {
+      return res.status(404).json({
+        message: 'User is not found.',
+      });
+    }
+
+    await UserModel.findByIdAndRemove(req.userId);
+
+    res.json({
+      success: "true"
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      message: 'No access.',
     });
   }
 };

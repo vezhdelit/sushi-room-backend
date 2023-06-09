@@ -8,9 +8,10 @@ import {
   register,
   login,
   profile,
+  remove,
+  update,
   addFavourite,
   removeFavourite,
-  update,
 } from './controllers/UserController.js';
 import checkAuth from './middleware/checkAuth.js';
 
@@ -35,13 +36,16 @@ mongoose
 app.get('/', (req, res) => {
   res.send('Server is up.');
 });
+
 ////
 
 app.post('/auth/login', loginValidation, login);
 app.post('/auth/register', registerValidation, register);
 app.get('/auth/profile', checkAuth, profile);
 
+app.delete('/auth', checkAuth, remove);
 app.patch('/auth', registerValidation, checkAuth, update);
+
 app.patch('/auth/addFavourite', checkAuth, addFavourite);
 app.patch('/auth/removeFavourite', checkAuth, removeFavourite);
 
