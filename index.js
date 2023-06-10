@@ -2,6 +2,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import multer from 'multer';
 
 import { registerValidation, loginValidation } from './validations/auth.js';
 import {
@@ -14,7 +15,6 @@ import {
   removeFavourite,
 } from './controllers/UserController.js';
 
-import checkAuth from './middleware/checkAuth.js';
 
 import { itemCreateValidation } from './validations/item.js';
 import { 
@@ -28,10 +28,25 @@ import {
 import { adCreateValidation } from './validations/ad.js';
 import { createAd, getAllAds } from './controllers/AdController.js';
 
+import handleValidationErrors from './middleware/handleValidationErrors.js';
+import checkAuth from './middleware/checkAuth.js';
+
 const app = express();
 app.use(express.json());
+app.use('/uploads', express.static('uploads'));
 app.use(cors());
 dotenv.config();
+
+const storage = multer.diskStorage({
+  destination: (_, __, cb) =>{
+    cb(null, "uploads");
+  },
+  filename: (_, file, cb) => {
+    cb(null, file.originalname);
+  },
+});
+
+const upload = multer({storage});
 
 mongoose
   .connect(process.env.MONGODB_URI)
@@ -46,26 +61,34 @@ app.get('/', (req, res) => {
 
 ////
 
-app.post('/auth/login', loginValidation, login);
-app.post('/auth/register', registerValidation, register);
+app.post('/upload', upload.single('image'), (req, res) => { //TODO: make checkAdmin
+  res.json({
+    url:`/uploads/${req.file.originalname}`,
+  })
+})
+
+////
+
+app.post('/auth/login', loginValidation, handleValidationErrors, login);
+app.post('/auth/register', registerValidation, handleValidationErrors, register);
 app.get('/auth/profile', checkAuth, profile);
 app.delete('/auth', checkAuth, remove);
-app.patch('/auth', registerValidation, checkAuth, update);
+app.patch('/auth', registerValidation, handleValidationErrors, checkAuth, update);
 
 app.patch('/auth/addFavourite', checkAuth, addFavourite);
 app.patch('/auth/removeFavourite', checkAuth, removeFavourite);
 
 ////
 
-app.post('/items', itemCreateValidation, createItem);
+app.post('/items', itemCreateValidation, handleValidationErrors, createItem);
 app.get('/items', getAllItems);
 app.get('/items/:id', getOneItem);
 app.delete('/items/:id', deleteItem); //TODO: make checkAdmin
-app.patch('/items/:id', itemCreateValidation, updateItem);
+app.patch('/items/:id', itemCreateValidation, handleValidationErrors, updateItem);
 
 ////
 
-app.post('/ads', adCreateValidation, createAd);
+app.post('/ads', adCreateValidation, handleValidationErrors, createAd);
 app.get('/ads', getAllAds);
 
 //////////////////////////////////////////////
