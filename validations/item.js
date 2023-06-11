@@ -9,6 +9,6 @@ export const itemCreateValidation = [
 
     body('description').optional().isString(),
     body('compounds').isString(),
-    body('category').isArray(),
+    body('category').isString(),
 
 ];
