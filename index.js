@@ -14,6 +14,7 @@ import {
   addFavourite,
   removeFavourite,
 } from './controllers/UserController.js';
+import{uploadFile} from './controllers/UploadController.js';
 
 
 import { itemCreateValidation } from './validations/item.js';
@@ -60,12 +61,29 @@ app.get('/', (req, res) => {
 });
 
 ////
+import fs from 'fs';
+import { fileURLToPath } from 'url';
 
-app.post('/upload', upload.single('image'), (req, res) => { //TODO: make checkAdmin
-  res.json({
-    url:`/uploads/${req.file.originalname}`,
-  })
-})
+import path from 'path';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+ //TODO: make checkAdmin
+app.post('/upload', upload.single('image'), )
+
+app.get('/upload', (req, res) => {
+  const directoryPath = path.join(__dirname, 'uploads');
+
+  // Скануємо папку uploads та повертаємо список файлів
+  fs.readdir(directoryPath, (err, files) => {
+    if (err) {
+      console.log('Помилка при скануванні папки:', err);
+      return res.status(500).send('Помилка сервера');
+    }
+
+    res.send(files);
+  });
+});
 
 ////
 
