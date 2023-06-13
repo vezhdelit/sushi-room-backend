@@ -69,7 +69,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
  //TODO: make checkAdmin
-app.post('/upload', upload.single('image'), )
+app.post('/upload', upload.single('image'), uploadFile);
 
 app.get('/upload', (req, res) => {
   const directoryPath = path.join(__dirname, 'uploads');
