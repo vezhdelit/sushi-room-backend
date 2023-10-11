@@ -4,33 +4,11 @@ import cors from "cors";
 import dotenv from "dotenv";
 import multer from "multer";
 
-import { registerValidation, loginValidation } from "./validations/auth.js";
-import {
-  register,
-  login,
-  profile,
-  remove,
-  update,
-  addFavourite,
-  removeFavourite,
-} from "./controllers/UserController.js";
-
-import { itemCreateValidation } from "./validations/item.js";
-import {
-  createItem,
-  getAllItems,
-  getOneItem,
-  deleteItem,
-  updateItem,
-} from "./controllers/ItemController.js";
-
-import { adCreateValidation } from "./validations/ad.js";
-import { createAd, getAllAds } from "./controllers/AdController.js";
-
-import handleValidationErrors from "./middleware/handleValidationErrors.js";
-import checkAuth from "./middleware/checkAuth.js";
-
 import { addImage, getImage } from "./api/s3.js";
+
+import userRoute from "./routes/User.js";
+import itemRoute from "./routes/Item.js";
+import adRoute from "./routes/Ad.js";
 
 const app = express();
 app.use(express.json());
@@ -55,47 +33,13 @@ app.get("/", (req, res) => {
 app.post("/upload", upload.single("image"), addImage);
 app.get("/upload/:key", getImage);
 
-////
-
-app.post("/auth/login", loginValidation, handleValidationErrors, login);
-app.post(
-  "/auth/register",
-  registerValidation,
-  handleValidationErrors,
-  register
-);
-app.get("/auth/profile", checkAuth, profile);
-app.delete("/auth", checkAuth, remove);
-app.patch(
-  "/auth",
-  registerValidation,
-  handleValidationErrors,
-  checkAuth,
-  update
-);
-
-app.patch("/auth/addFavourite", checkAuth, addFavourite);
-app.patch("/auth/removeFavourite", checkAuth, removeFavourite);
-
-////
-
-app.post("/items", itemCreateValidation, handleValidationErrors, createItem);
-app.get("/items", getAllItems);
-app.get("/items/:id", getOneItem);
-app.delete("/items/:id", deleteItem); //TODO: make checkAdmin
-app.patch(
-  "/items/:id",
-  itemCreateValidation,
-  handleValidationErrors,
-  updateItem
-);
-
-////
-
-app.post("/ads", adCreateValidation, handleValidationErrors, createAd);
-app.get("/ads", getAllAds);
-
 //////////////////////////////////////////////
+
+app.use("/auth", userRoute);
+app.use("/items", itemRoute);
+app.use("/ads", adRoute);
+
+////////////////////////////////////////////
 
 app.listen(process.env.PORT || 5000, (err) => {
   if (err) {
