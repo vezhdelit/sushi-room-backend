@@ -8,8 +8,7 @@ import itemRoute from "./routes/Item.js";
 import uploadRoute from "./routes/Upload.js";
 import adRoute from "./routes/Ad.js";
 
-import swaggerJsdoc from "swagger-jsdoc";
-import swaggerUiExpress from "swagger-ui-express";
+import swaggerDocs from "./utils/swagger.js";
 
 const app = express();
 app.use(express.json());
@@ -32,22 +31,6 @@ app.use("/items", itemRoute);
 app.use("/upload", uploadRoute);
 app.use("/ads", adRoute);
 
-///////////////////////////
-
-const options = {
-  definition: {
-    openapi: "3.0.0",
-    servers: [
-      {
-        url: "http://localhost:5000/",
-      },
-    ],
-  },
-  apis: ["./routes/*.js"],
-};
-const specs = swaggerJsdoc(options);
-app.use("/api-docs", swaggerUiExpress.serve, swaggerUiExpress.setup(specs));
-
 ////////////////////////////////////////////
 
 app.listen(process.env.PORT || 5000, (err) => {
@@ -55,4 +38,5 @@ app.listen(process.env.PORT || 5000, (err) => {
     return console.log("Error. Can't start server", err);
   }
   console.log("Server started successfuly");
+  swaggerDocs(app, process.env.PORT || 5000);
 });
