@@ -1,6 +1,8 @@
-import AdModel from '../models/AdModel.js';
+import AdModel from "../models/AdModel.js";
 
 export const createAd = async (req, res) => {
+  // #swagger.tags = ['Ads']
+
   try {
     const doc = new AdModel({
       imageUrl: req.body.imageUrl,
@@ -13,19 +15,21 @@ export const createAd = async (req, res) => {
   } catch (err) {
     console.log(err);
     res.status(500).json({
-      message: 'Failed create new ad.',
+      message: "Failed create new ad.",
     });
   }
 };
 
 export const getAllAds = async (req, res) => {
+  // #swagger.tags = ['Ads']
+
   try {
     const ads = await AdModel.find();
     res.json(ads);
   } catch (err) {
     console.log(err);
     res.status(500).json({
-      message: 'Cant get ad.',
+      message: "Cant get ad.",
     });
   }
 };

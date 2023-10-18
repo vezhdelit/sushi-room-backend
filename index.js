@@ -8,8 +8,8 @@ import itemRoute from "./routes/Item.js";
 import uploadRoute from "./routes/Upload.js";
 import adRoute from "./routes/Ad.js";
 
-import swaggerJsdoc from "swagger-jsdoc";
-import swaggerUiExpress from "swagger-ui-express";
+import swaggerDocument from "./swagger-output.json" assert { type: "json" };
+import swaggerUI from "swagger-ui-express";
 
 const app = express();
 app.use(express.json());
@@ -24,6 +24,7 @@ mongoose
 ///////////////////////////////////////////////
 
 app.get("/", (req, res) => {
+  // #swagger.tags = ['App']
   res.send("Server is up.");
 });
 
@@ -32,21 +33,7 @@ app.use("/items", itemRoute);
 app.use("/upload", uploadRoute);
 app.use("/ads", adRoute);
 
-///////////////////////////
-
-const options = {
-  definition: {
-    openapi: "3.0.0",
-    servers: [
-      {
-        url: "http://localhost:5000/",
-      },
-    ],
-  },
-  apis: ["./routes/*.js"],
-};
-const specs = swaggerJsdoc(options);
-app.use("/api-docs", swaggerUiExpress.serve, swaggerUiExpress.setup(specs));
+app.use("/docs", swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 
 ////////////////////////////////////////////
 
