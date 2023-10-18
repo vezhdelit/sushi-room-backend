@@ -8,9 +8,6 @@ import itemRoute from "./routes/Item.js";
 import uploadRoute from "./routes/Upload.js";
 import adRoute from "./routes/Ad.js";
 
-import swaggerJsdoc from "swagger-jsdoc";
-import swaggerUiExpress from "swagger-ui-express";
-
 const app = express();
 app.use(express.json());
 app.use(cors());
@@ -34,19 +31,10 @@ app.use("/ads", adRoute);
 
 ///////////////////////////
 
-const options = {
-  definition: {
-    openapi: "3.0.0",
-    servers: [
-      {
-        url: "http://localhost:5000/",
-      },
-    ],
-  },
-  apis: ["./routes/*.js"],
-};
-const specs = swaggerJsdoc(options);
-app.use("/api-docs", swaggerUiExpress.serve, swaggerUiExpress.setup(specs));
+import swaggerUI from "swagger-ui-express";
+import swaggerDocument from "./swagger-output.json" assert { type: "json" };
+
+app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 
 ////////////////////////////////////////////
 
