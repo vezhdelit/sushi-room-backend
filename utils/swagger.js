@@ -8,7 +8,10 @@ const doc = {
   },
   host: "localhost:5000",
   schemes: [],
-  servers: [{ url: "http://localhost:5000" }],
+  servers: [
+    { url: "http://localhost:5000" },
+    { url: "https://sushi-room-backend.up.railway.app" },
+  ],
   tags: [
     {
       name: "App",
