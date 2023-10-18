@@ -17,6 +17,8 @@ const s3 = new S3({
 });
 
 export const addImage = async (req, res) => {
+  // #swagger.tags = ['Upload']
+
   const params = {
     Bucket: BUCKET_NAME,
     Key: req.file.originalname,
@@ -33,6 +35,8 @@ export const addImage = async (req, res) => {
 };
 
 export const getImage = async (req, res) => {
+  // #swagger.tags = ['Upload']
+
   const key = req.params.key;
 
   const params = {

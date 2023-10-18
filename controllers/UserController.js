@@ -1,8 +1,10 @@
-import jwt from 'jsonwebtoken';
-import bcrypt from 'bcrypt';
-import UserModel from '../models/UserModel.js';
+import jwt from "jsonwebtoken";
+import bcrypt from "bcrypt";
+import UserModel from "../models/UserModel.js";
 
 export const register = async (req, res) => {
+  // #swagger.tags = ['Auth']
+
   try {
     const password = req.body.password;
     const salt = await bcrypt.genSalt(10);
@@ -22,10 +24,10 @@ export const register = async (req, res) => {
       {
         _id: user._id,
       },
-      'secretkey123',
+      "secretkey123",
       {
-        expiresIn: '14d',
-      },
+        expiresIn: "14d",
+      }
     );
 
     const { passwordHash, ...userData } = user._doc;
@@ -37,26 +39,31 @@ export const register = async (req, res) => {
   } catch (err) {
     console.log(err);
     res.status(500).json({
-      message: 'Failed registration.',
+      message: "Failed registration.",
     });
   }
 };
 
 export const login = async (req, res) => {
+  // #swagger.tags = ['Auth']
+
   try {
     const user = await UserModel.findOne({ email: req.body.email });
 
     if (!user) {
       return res.status(404).json({
-        message: 'Wrong login or password.',
+        message: "Wrong login or password.",
       });
     }
 
-    const isValidPass = await bcrypt.compare(req.body.password, user._doc.passwordHash);
+    const isValidPass = await bcrypt.compare(
+      req.body.password,
+      user._doc.passwordHash
+    );
 
     if (!isValidPass) {
       return res.status(404).json({
-        message: 'Wrong login or password.',
+        message: "Wrong login or password.",
       });
     }
 
@@ -64,10 +71,10 @@ export const login = async (req, res) => {
       {
         _id: user._id,
       },
-      'secretkey123',
+      "secretkey123",
       {
-        expiresIn: '14d',
-      },
+        expiresIn: "14d",
+      }
     );
 
     const { passwordHash, ...userData } = user._doc;
@@ -79,17 +86,19 @@ export const login = async (req, res) => {
   } catch (err) {
     console.log(err);
     res.status(500).json({
-      message: 'Failed login.',
+      message: "Failed login.",
     });
   }
 };
 
 export const profile = async (req, res) => {
+  // #swagger.tags = ['Auth']
+
   try {
     const user = await UserModel.findById(req.userId);
     if (!user) {
       return res.status(404).json({
-        message: 'User is not found.',
+        message: "User is not found.",
       });
     }
 
@@ -99,17 +108,19 @@ export const profile = async (req, res) => {
   } catch (err) {
     console.log(err);
     res.status(500).json({
-      message: 'No access.',
+      message: "No access.",
     });
   }
 };
 
 export const update = async (req, res) => {
+  // #swagger.tags = ['Auth']
+
   try {
     const user = await UserModel.findById(req.userId);
     if (!user) {
       return res.status(404).json({
-        message: 'User is not found.',
+        message: "User is not found.",
       });
     }
     const password = req.body.password;
@@ -127,48 +138,52 @@ export const update = async (req, res) => {
         passwordHash: hash,
       },
       {
-        returnDocument: 'after',
-      },
+        returnDocument: "after",
+      }
     ).then((user) => {
       res.json(user._doc);
     });
   } catch (err) {
     console.log(err);
     res.status(500).json({
-      message: 'Failed update info.',
+      message: "Failed update info.",
     });
   }
 };
 
 export const remove = async (req, res) => {
+  // #swagger.tags = ['Auth']
+
   try {
     const user = await UserModel.findById(req.userId);
 
     if (!user) {
       return res.status(404).json({
-        message: 'User is not found.',
+        message: "User is not found.",
       });
     }
 
     await UserModel.findByIdAndRemove(req.userId);
 
     res.json({
-      success: "true"
+      success: "true",
     });
   } catch (err) {
     console.log(err);
     res.status(500).json({
-      message: 'No access.',
+      message: "No access.",
     });
   }
 };
 
 export const addFavourite = async (req, res) => {
+  // #swagger.tags = ['Auth']
+
   try {
     const user = await UserModel.findById(req.userId);
     if (!user) {
       return res.status(404).json({
-        message: 'User is not found.',
+        message: "User is not found.",
       });
     }
 
@@ -180,25 +195,27 @@ export const addFavourite = async (req, res) => {
         $addToSet: { favourites: req.body._id },
       },
       {
-        returnDocument: 'after',
-      },
+        returnDocument: "after",
+      }
     ).then((user) => {
       res.json(user._doc);
     });
   } catch (err) {
     console.log(err);
     res.status(500).json({
-      message: 'No access.',
+      message: "No access.",
     });
   }
 };
 
 export const removeFavourite = async (req, res) => {
+  // #swagger.tags = ['Auth']
+
   try {
     const user = await UserModel.findById(req.userId);
     if (!user) {
       return res.status(404).json({
-        message: 'User is not found.',
+        message: "User is not found.",
       });
     }
 
@@ -210,15 +227,15 @@ export const removeFavourite = async (req, res) => {
         $pull: { favourites: req.body._id },
       },
       {
-        returnDocument: 'after',
-      },
+        returnDocument: "after",
+      }
     ).then((user) => {
       res.json(user._doc);
     });
   } catch (err) {
     console.log(err);
     res.status(500).json({
-      message: 'No access.',
+      message: "No access.",
     });
   }
 };

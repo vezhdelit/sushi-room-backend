@@ -21,6 +21,8 @@ mongoose
 ///////////////////////////////////////////////
 
 app.get("/", (req, res) => {
+  // #swagger.tags = ['App']
+
   res.send("Server is up.");
 });
 

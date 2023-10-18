@@ -1,19 +1,21 @@
-import ItemModel from '../models/ItemModel.js';
+import ItemModel from "../models/ItemModel.js";
 
 export const getAllItems = async (req, res) => {
+  // #swagger.tags = ['Items']
+
   try {
     const category = req.query.category;
-    const sortBy = req.query.sortBy || 'rating';
+    const sortBy = req.query.sortBy || "rating";
     const sortOrder = req.query.order;
-    const search = req.query.search || '';
+    const search = req.query.search || "";
     const limit = req.query.limit || 0;
     const page = req.query.page || 1;
 
     const filter = {
       $or: [
-        { title: { $regex: search, $options: 'i' } },
-        { description: { $regex: search, $options: 'i' } },
-        { compounds: { $regex: search, $options: 'i' } },
+        { title: { $regex: search, $options: "i" } },
+        { description: { $regex: search, $options: "i" } },
+        { compounds: { $regex: search, $options: "i" } },
       ],
     };
 
@@ -28,12 +30,14 @@ export const getAllItems = async (req, res) => {
   } catch (err) {
     console.log(err);
     res.status(500).json({
-      message: 'Cant get items.',
+      message: "Cant get items.",
     });
   }
 };
 
 export const getOneItem = async (req, res) => {
+  // #swagger.tags = ['Items']
+
   try {
     const itemId = req.params.id;
 
@@ -45,13 +49,13 @@ export const getOneItem = async (req, res) => {
         $inc: { rating: 1 },
       },
       {
-        returnDocument: 'after',
-      },
+        returnDocument: "after",
+      }
     );
 
     if (!item) {
       return res.status(404).json({
-        message: 'Item is not found.',
+        message: "Item is not found.",
       });
     }
 
@@ -59,12 +63,14 @@ export const getOneItem = async (req, res) => {
   } catch (err) {
     console.log(err);
     res.status(500).json({
-      message: 'Cant get item.',
+      message: "Cant get item.",
     });
   }
 };
 
 export const createItem = async (req, res) => {
+  // #swagger.tags = ['Items']
+
   try {
     const doc = new ItemModel({
       imageUrl: req.body.imageUrl,
@@ -84,12 +90,14 @@ export const createItem = async (req, res) => {
   } catch (err) {
     console.log(err);
     res.status(500).json({
-      message: 'Failed create new item.',
+      message: "Failed create new item.",
     });
   }
 };
 
 export const deleteItem = async (req, res) => {
+  // #swagger.tags = ['Items']
+
   try {
     const itemId = req.params.id;
 
@@ -97,25 +105,26 @@ export const deleteItem = async (req, res) => {
 
     if (!item) {
       return res.status(404).json({
-        message: 'Item is not found.',
+        message: "Item is not found.",
       });
     }
 
     await ItemModel.findByIdAndRemove(itemId);
 
     res.json({
-      success: "true"
+      success: "true",
     });
-    
   } catch (err) {
     console.log(err);
     res.status(500).json({
-      message: 'Failed deleting item.',
+      message: "Failed deleting item.",
     });
   }
 };
 
 export const updateItem = async (req, res) => {
+  // #swagger.tags = ['Items']
+
   try {
     const itemId = req.params.id;
 
@@ -123,12 +132,12 @@ export const updateItem = async (req, res) => {
 
     if (!item) {
       return res.status(404).json({
-        message: 'Item is not found.',
+        message: "Item is not found.",
       });
     }
     await ItemModel.findOneAndUpdate(
       {
-        _id: itemId
+        _id: itemId,
       },
       {
         imageUrl: req.body.imageUrl,
@@ -136,21 +145,21 @@ export const updateItem = async (req, res) => {
         price: req.body.price,
         quantity: req.body.quantity,
         weight: req.body.weight,
-  
+
         description: req.body.description,
         compounds: req.body.compounds,
         category: req.body.category,
       },
       {
-        returnDocument: 'after',
-      },
+        returnDocument: "after",
+      }
     ).then((item) => {
       res.json(item._doc);
     });
   } catch (err) {
     console.log(err);
     res.status(500).json({
-      message: 'Failed update item.',
+      message: "Failed update item.",
     });
   }
 };
