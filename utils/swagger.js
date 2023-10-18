@@ -2,8 +2,9 @@ import swaggerAutogen from "swagger-autogen";
 
 const doc = {
   info: {
-    title: "SUSHIROOM API documentation using SwaggerUI",
-    description: "SUSHIROOM API documentation using SwaggerUI",
+    title: "SUSHIROOM API Docs",
+    description:
+      "SUSHIROOM API documentation documentation using SwaggerUI and swagger-autogen",
   },
   host: "localhost:5000",
   schemes: [],
