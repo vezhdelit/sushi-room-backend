@@ -26,6 +26,7 @@ export const addImage = async (req, res) => {
               required: 'true',
               description: 'Upload image to the s3 bucket',
         } */
+
   const params = {
     Bucket: BUCKET_NAME,
     Key: req.file.originalname,

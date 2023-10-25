@@ -5,6 +5,7 @@ export default (req, res, next) => {
   /* #swagger.security = [{
             "bearerAuth": []
     }] */
+
   if (token) {
     try {
       const decoded = jwt.verify(token, "secretkey123");
