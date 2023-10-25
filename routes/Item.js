@@ -11,9 +11,10 @@ import {
 } from "../controllers/ItemController.js";
 import handleValidationErrors from "../middleware/handleValidationErrors.js";
 
-router.post("/", itemCreateValidation, handleValidationErrors, createItem);
 router.get("/", getAllItems);
 router.get("/:id", getOneItem);
+
+router.post("/", itemCreateValidation, handleValidationErrors, createItem);
 router.delete("/:id", deleteItem); //TODO: make checkAdmin
 router.patch("/:id", itemCreateValidation, handleValidationErrors, updateItem);
 

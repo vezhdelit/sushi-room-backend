@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "start": "nodemon index.js",
+    "swagger-autogen": "node .utils/swagger.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",

@@ -4,7 +4,11 @@ import UserModel from "../models/UserModel.js";
 
 export const register = async (req, res) => {
   // #swagger.tags = ['Auth']
-
+  /*  #swagger.parameters['body'] = {
+            in: 'body',
+            description: 'Resister user.',
+            schema: { $ref: '#/definitions/User' }
+    } */
   try {
     const password = req.body.password;
     const salt = await bcrypt.genSalt(10);
@@ -46,7 +50,11 @@ export const register = async (req, res) => {
 
 export const login = async (req, res) => {
   // #swagger.tags = ['Auth']
-
+  /*  #swagger.parameters['body'] = {
+            in: 'body',
+            description: 'Sign in user.',
+            schema: { $ref: '#/definitions/User' }
+    } */
   try {
     const user = await UserModel.findOne({ email: req.body.email });
 
@@ -93,7 +101,11 @@ export const login = async (req, res) => {
 
 export const profile = async (req, res) => {
   // #swagger.tags = ['Auth']
-
+  /*  #swagger.parameters['body'] = {
+            in: 'body',
+            description: 'Check if user is authorized(Bearer token)',
+            schema: { $ref: '#/definitions/User' }
+    } */
   try {
     const user = await UserModel.findById(req.userId);
     if (!user) {
@@ -115,6 +127,11 @@ export const profile = async (req, res) => {
 
 export const update = async (req, res) => {
   // #swagger.tags = ['Auth']
+  /*  #swagger.parameters['body'] = {
+            in: 'body',
+            description: 'Edit user data by id',
+            schema: { $ref: '#/definitions/User' }
+    } */
 
   try {
     const user = await UserModel.findById(req.userId);
@@ -153,7 +170,11 @@ export const update = async (req, res) => {
 
 export const remove = async (req, res) => {
   // #swagger.tags = ['Auth']
-
+  /*  #swagger.parameters['body'] = {
+            in: 'body',
+            description: 'Delete user by id if authorized',
+            schema: { $ref: '#/definitions/User' }
+    } */
   try {
     const user = await UserModel.findById(req.userId);
 
@@ -178,7 +199,11 @@ export const remove = async (req, res) => {
 
 export const addFavourite = async (req, res) => {
   // #swagger.tags = ['Auth']
-
+  /*  #swagger.parameters['body'] = {
+            in: 'body',
+            description: 'Add new item id to favourites',
+            schema: { $ref: '#/definitions/User' }
+    } */
   try {
     const user = await UserModel.findById(req.userId);
     if (!user) {
@@ -210,7 +235,11 @@ export const addFavourite = async (req, res) => {
 
 export const removeFavourite = async (req, res) => {
   // #swagger.tags = ['Auth']
-
+  /*  #swagger.parameters['body'] = {
+            in: 'body',
+            description: 'Remove item id from favourites',
+            schema: { $ref: '#/definitions/User' }
+    } */
   try {
     const user = await UserModel.findById(req.userId);
     if (!user) {

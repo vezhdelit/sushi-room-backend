@@ -7,7 +7,6 @@ const doc = {
       "SUSHIROOM API documentation documentation using SwaggerUI and swagger-autogen",
   },
   host: "localhost:5000",
-  schemes: [],
   servers: [
     { url: "http://localhost:5000" },
     { url: "https://sushi-room-backend.up.railway.app" },
@@ -29,6 +28,33 @@ const doc = {
       name: "Upload",
     },
   ],
+  definitions: {
+    Item: {
+      imageUrl: "a",
+      title: "a",
+      price: 300,
+      quantity: 2,
+      weight: 300,
+
+      description: "a",
+      compounds: "a",
+
+      category: "a",
+
+      rating: 1,
+    },
+    User: {
+      fullName: "a",
+      email: "a@gmail.com",
+      phoneNumber: "+380666719894",
+      passwordHash: "eafewfewfewfewffewvewgwf",
+      favourites: [{ id: "ef1r31qf" }],
+    },
+    Ad: {
+      imageUrl: "images.com/image1",
+      title: "ad name",
+    },
+  },
   components: {
     securitySchemes: {
       bearerAuth: {

@@ -2,6 +2,11 @@ import AdModel from "../models/AdModel.js";
 
 export const createAd = async (req, res) => {
   // #swagger.tags = ['Ads']
+  /*  #swagger.parameters['body'] = {
+            in: 'body',
+            description: 'Create Ad',
+            schema: { $ref: '#/definitions/Ad' }
+    } */
 
   try {
     const doc = new AdModel({
@@ -22,6 +27,11 @@ export const createAd = async (req, res) => {
 
 export const getAllAds = async (req, res) => {
   // #swagger.tags = ['Ads']
+  /*  #swagger.parameters['body'] = {
+            in: 'body',
+            description: 'Get all Ad',
+            schema: { $ref: '#/definitions/Ad' }
+    } */
 
   try {
     const ads = await AdModel.find();

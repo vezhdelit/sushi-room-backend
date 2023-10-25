@@ -50,6 +50,7 @@
           "Auth"
         ],
         "description": "",
+        "parameters": [],
         "responses": {
           "200": {
             "description": "OK"
@@ -89,6 +90,7 @@
           "Auth"
         ],
         "description": "",
+        "parameters": [],
         "responses": {
           "200": {
             "description": "OK"
@@ -141,36 +143,13 @@
             "schema": {
               "type": "string"
             }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
           },
-          "403": {
-            "description": "Forbidden"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
-      }
-    },
-    "/auth/": {
-      "delete": {
-        "tags": [
-          "Auth"
-        ],
-        "description": "",
-        "parameters": [
           {
-            "name": "authorization",
-            "in": "header",
+            "name": "body",
+            "in": "body",
+            "description": "Check if user is authorized(Bearer token)",
             "schema": {
-              "type": "string"
+              "$ref": "#/components/schemas/User"
             }
           }
         ],
@@ -187,7 +166,56 @@
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/auth/": {
+      "delete": {
+        "tags": [
+          "Auth"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Delete user by id if authorized",
+            "schema": {
+              "$ref": "#/components/schemas/User"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       },
       "patch": {
         "tags": [
@@ -220,6 +248,11 @@
             "description": "Internal Server Error"
           }
         },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -274,6 +307,11 @@
             "description": "Internal Server Error"
           }
         },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -319,6 +357,11 @@
             "description": "Internal Server Error"
           }
         },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -336,64 +379,20 @@
       }
     },
     "/items/": {
-      "post": {
-        "tags": [
-          "Items"
-        ],
-        "description": "",
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        },
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "imageUrl": {
-                    "example": "any"
-                  },
-                  "title": {
-                    "example": "any"
-                  },
-                  "price": {
-                    "example": "any"
-                  },
-                  "quantity": {
-                    "example": "any"
-                  },
-                  "weight": {
-                    "example": "any"
-                  },
-                  "description": {
-                    "example": "any"
-                  },
-                  "compounds": {
-                    "example": "any"
-                  },
-                  "category": {
-                    "example": "any"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
       "get": {
         "tags": [
           "Items"
         ],
         "description": "",
         "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Get all items.",
+            "schema": {
+              "$ref": "#/components/schemas/Item"
+            }
+          },
           {
             "name": "category",
             "in": "query",
@@ -445,6 +444,59 @@
             "description": "Internal Server Error"
           }
         }
+      },
+      "post": {
+        "tags": [
+          "Items"
+        ],
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "imageUrl": {
+                    "example": "any"
+                  },
+                  "title": {
+                    "example": "any"
+                  },
+                  "price": {
+                    "example": "any"
+                  },
+                  "quantity": {
+                    "example": "any"
+                  },
+                  "weight": {
+                    "example": "any"
+                  },
+                  "description": {
+                    "example": "any"
+                  },
+                  "compounds": {
+                    "example": "any"
+                  },
+                  "category": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/items/{id}": {
@@ -460,6 +512,14 @@
             "required": true,
             "schema": {
               "type": "string"
+            }
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Get item by id.",
+            "schema": {
+              "$ref": "#/components/schemas/Item"
             }
           }
         ],
@@ -487,6 +547,14 @@
             "required": true,
             "schema": {
               "type": "string"
+            }
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Delete item by id.",
+            "schema": {
+              "$ref": "#/components/schemas/Item"
             }
           }
         ],
@@ -574,6 +642,17 @@
           "Upload"
         ],
         "description": "",
+        "parameters": [
+          {
+            "name": "singleFile",
+            "in": "formData",
+            "required": true,
+            "description": "Upload image to the s3 bucket",
+            "schema": {
+              "type": "file"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -610,6 +689,7 @@
           "Ads"
         ],
         "description": "",
+        "parameters": [],
         "responses": {
           "200": {
             "description": "OK"
@@ -644,6 +724,16 @@
           "Ads"
         ],
         "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Get all Ad",
+            "schema": {
+              "$ref": "#/components/schemas/Ad"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -660,6 +750,95 @@
       "bearerAuth": {
         "type": "http",
         "scheme": "bearer"
+      }
+    },
+    "schemas": {
+      "Item": {
+        "type": "object",
+        "properties": {
+          "imageUrl": {
+            "type": "string",
+            "example": "a"
+          },
+          "title": {
+            "type": "string",
+            "example": "a"
+          },
+          "price": {
+            "type": "number",
+            "example": 300
+          },
+          "quantity": {
+            "type": "number",
+            "example": 2
+          },
+          "weight": {
+            "type": "number",
+            "example": 300
+          },
+          "description": {
+            "type": "string",
+            "example": "a"
+          },
+          "compounds": {
+            "type": "string",
+            "example": "a"
+          },
+          "category": {
+            "type": "string",
+            "example": "a"
+          },
+          "rating": {
+            "type": "number",
+            "example": 1
+          }
+        }
+      },
+      "User": {
+        "type": "object",
+        "properties": {
+          "fullName": {
+            "type": "string",
+            "example": "a"
+          },
+          "email": {
+            "type": "string",
+            "example": "a@gmail.com"
+          },
+          "phoneNumber": {
+            "type": "string",
+            "example": "+380666719894"
+          },
+          "passwordHash": {
+            "type": "string",
+            "example": "eafewfewfewfewffewvewgwf"
+          },
+          "favourites": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "example": "ef1r31qf"
+                }
+              }
+            }
+          }
+        }
+      },
+      "Ad": {
+        "type": "object",
+        "properties": {
+          "imageUrl": {
+            "type": "string",
+            "example": "images.com/image1"
+          },
+          "title": {
+            "type": "string",
+            "example": "ad name"
+          }
+        }
       }
     }
   }

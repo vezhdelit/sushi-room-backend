@@ -18,7 +18,14 @@ const s3 = new S3({
 
 export const addImage = async (req, res) => {
   // #swagger.tags = ['Upload']
-
+  /*
+          #swagger.consumes = ['multipart/form-data']  
+          #swagger.parameters['singleFile'] = {
+              in: 'formData',
+              type: 'file',
+              required: 'true',
+              description: 'Upload image to the s3 bucket',
+        } */
   const params = {
     Bucket: BUCKET_NAME,
     Key: req.file.originalname,

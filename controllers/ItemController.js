@@ -2,6 +2,11 @@ import ItemModel from "../models/ItemModel.js";
 
 export const getAllItems = async (req, res) => {
   // #swagger.tags = ['Items']
+  /*  #swagger.parameters['body'] = {
+            in: 'body',
+            description: 'Get all items.',
+            schema: { $ref: '#/definitions/Item' }
+    } */
 
   try {
     const category = req.query.category;
@@ -37,6 +42,11 @@ export const getAllItems = async (req, res) => {
 
 export const getOneItem = async (req, res) => {
   // #swagger.tags = ['Items']
+  /*  #swagger.parameters['body'] = {
+            in: 'body',
+            description: 'Get item by id.',
+            schema: { $ref: '#/definitions/Item' }
+    } */
 
   try {
     const itemId = req.params.id;
@@ -70,6 +80,11 @@ export const getOneItem = async (req, res) => {
 
 export const createItem = async (req, res) => {
   // #swagger.tags = ['Items']
+  /*  #swagger.parameters['body'] = {
+            in: 'body',
+            description: 'Create new item',
+            schema: { $ref: '#/definitions/Item' }
+    } */
 
   try {
     const doc = new ItemModel({
@@ -97,7 +112,11 @@ export const createItem = async (req, res) => {
 
 export const deleteItem = async (req, res) => {
   // #swagger.tags = ['Items']
-
+  /*  #swagger.parameters['body'] = {
+            in: 'body',
+            description: 'Delete item by id.',
+            schema: { $ref: '#/definitions/Item' }
+    } */
   try {
     const itemId = req.params.id;
 
@@ -124,7 +143,11 @@ export const deleteItem = async (req, res) => {
 
 export const updateItem = async (req, res) => {
   // #swagger.tags = ['Items']
-
+  /*  #swagger.parameters['body'] = {
+            in: 'body',
+            description: 'Edit item by id.',
+            schema: { $ref: '#/definitions/Item' }
+    } */
   try {
     const itemId = req.params.id;
 
