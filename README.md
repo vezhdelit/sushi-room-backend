@@ -19,6 +19,7 @@ This project is a backend for sushi-room.vercel.app website
 - [sushi-room.vercel.app](https://sushi-room.vercel.app/)
 
 ### Licence:
+- Apache License Version 2.0, January 2004
 - Даний застосунок є складовою дипломного проєкту Веждела Василя (ДВНЗ Ужну, м. Ужгород, Закарпатська область, Україна)
 
 ### Example:
