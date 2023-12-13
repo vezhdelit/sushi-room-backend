@@ -1,4 +1,18 @@
 # sushi-room-backend
+This project is a backend for sushi-room.vercel.app website
+
+API docs: 
+sushi-room-backend.up.railway.app/docs
+
+Technologies and packages:
+-Express.js
+-swagger-autogen
+-mongoDB and mongoose
+
+To setup your own instance:
+-download repository
+-setup your own ENV vars(Mongo, AWS and host)
+-npm run dev
 
 Даний застосунок є складовою дипломного проєкту Веждела Василя (ДВНЗ Ужну, м. Ужгород, Закарпатська область, Україна)
 
