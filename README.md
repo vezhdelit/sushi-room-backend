@@ -13,7 +13,7 @@ This project is a backend for sushi-room.vercel.app website
 ### To setup your own instance:
 - download repository
 - setup your own ENV vars(Mongo, AWS and host)
--npm run dev
+- npm run dev
 
 ### Demo link:
 - [sushi-room.vercel.app](https://sushi-room.vercel.app/)
