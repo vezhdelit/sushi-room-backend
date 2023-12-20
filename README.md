@@ -4,7 +4,6 @@ This project is a backend for sushi-room.vercel.app website
 ### API docs: 
 - [sushi-room-backend.up.railway.app/docs](https://sushi-room-backend.up.railway.app/docs/)
 
-
 ### Technologies and packages:
 - Express.js
 - swagger-autogen
